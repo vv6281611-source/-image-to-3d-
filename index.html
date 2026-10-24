@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My AI Image to 3D</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#0b1020;color:#f4f6ff;
+  font-family:Arial,sans-serif;padding:20px
+}
+main{max-width:650px;margin:auto}
+h1{font-size:29px;margin-bottom:8px}
+p{color:#b9c4df;line-height:1.6}
+.panel{
+  background:#151d32;border:1px solid #303d5b;
+  border-radius:18px;padding:18px;margin-top:18px
+}
+.upload{
+  border:2px dashed #6678ad;border-radius:14px;
+  padding:24px 12px;text-align:center
+}
+button,.filebtn{
+  background:#5878ff;color:white;border:0;
+  border-radius:10px;padding:13px 17px;
+  font-size:15px;display:inline-block;margin-top:12px
+}
+input{max-width:100%}
+#preview{
+  display:none;width:100%;max-height:350px;
+  object-fit:contain;margin-top:16px;border-radius:12px
+}
+#status{color:#ffd17a;overflow-wrap:anywhere}
+.small{font-size:13px;color:#aab6d2}
+</style>
+</head>
+<body>
+<main>
+  <h1>✨ My AI Image to 3D</h1>
+  <p>अपनी फोटो चुनें और उसे 3D मॉडल में बदलने की शुरुआत करें।</p>
+
+  <section class="panel">
+    <h2>① अपनी फोटो चुनें</h2>
+    <div class="upload">
+      <p>इंसान, घर, गाड़ी या किसी वस्तु की फोटो चुनें।</p>
+      <input id="photo" type="file" accept="image/*">
+      <img id="preview" alt="आपकी चुनी हुई फोटो">
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>② 3D मॉडल बनाएँ</h2>
+    <p>अगले चरण में AI सर्वर जोड़कर फोटो से असली 3D मॉडल बनाया जाएगा।</p>
+    <button id="generate">Generate 3D Model</button>
+    <p id="status">पहले अपनी फोटो चुनें।</p>
+  </section>
+
+  <section class="panel">
+    <h2>③ आपका 3D मॉडल</h2>
+    <p id="result">AI जनरेशन सर्वर अभी कनेक्ट नहीं है। कनेक्शन बनने पर यहाँ 3D प्रीव्यू और डाउनलोड विकल्प जोड़े जाएँगे।</p>
+  </section>
+
+  <p class="small">Free prototype · Mobile friendly · AI server connection pending</p>
+</main>
+<script>
+const photo = document.getElementById('photo');
+const preview = document.getElementById('preview');
+const status = document.getElementById('status');
+let imageUrl = '';
+
+photo.addEventListener('change', () => {
+  if (imageUrl) URL.revokeObjectURL(imageUrl);
+  const file = photo.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    status.textContent = 'कृपया एक image file चुनें।';
+    return;
+  }
+  imageUrl = URL.createObjectURL(file);
+  preview.src = imageUrl;
+  preview.style.display = 'block';
+  status.textContent = 'फोटो तैयार है। AI सर्वर जोड़ना अभी बाकी है।';
+});
+
+document.getElementById('generate').addEventListener('click', () => {
+  if (!photo.files.length) {
+    status.textContent = 'पहले अपनी फोटो चुनें।';
+    return;
+  }
+  status.textContent =
+    'फोटो चुनी गई है, लेकिन वास्तविक 3D जनरेशन के लिए AI सर्वर कनेक्ट करना बाकी है।';
+});
+</script>
+</body>
+  </html>
+  
